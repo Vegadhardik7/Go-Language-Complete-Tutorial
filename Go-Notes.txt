@@ -1,0 +1,109 @@
+* Go is a STATICALLY typed language. With flexibility of a Dynamically Typed language. 
+In which varaible cant be reassigned to other datatype.
+
+* Variable Shadowing: Create same variable inside one function but different block.
+
+* Array's in Go:
+- Passed by value to a function.
+
+* Why to use slice over array in go?
+- Array is very riggid we cant add value or remove it from the array, we can just replace it and append value in array.
+- Slice is dynamic in nature we can add, remove, modify the values in slice.
+- Array: var a [6]int
+- Slice: var a []int
+
+* Slices
+- Slice contains 3 components [Pointer, Length, Capacity]
+- Slice is a pointer to an array.
+
+ Capacity=6
+|-----------|
+[ | | | | | ]
+ ^
+ Pointer
+|-------|
+ Length=4
+
+ * When to use slice and when to use array?
+ - If we have set of collections which are not going to change, at that time we should use array.
+ - If we are going to modify the values then we can use slice.
+
+ * Maps?
+ - Unordered collections of key value pairs.
+ - Alawys passed by reference.
+
+ * why key orders are random like 102 103 101 and not 101 102 103
+
+- In Go, the iteration order of map keys is random because maps are inherently unordered collections. 
+When you iterate over a map, there's no guaranteed order of keys because Go's implementation of maps 
+focuses on efficiency and fast lookups rather than maintaining order.
+
+* For Error handling most of the developers use github.com/pkg/errors package
+
+* Variadic functions: functions which can take multiple inputs
+
+* FirstClass function: If we say that a language supports FirstClass functions that means it is possible to assign
+                       a function to a variable or pass a function as a parameter to another function or a function
+                       can be returned from a function.
+
+* closure function: 
+- when an anonimus function access variable outside the function it is called as closure. 
+  closure also helps to retain the state of a function.
+- In a case where we are not able to change the signature of a function, but we have the dependency inside that
+  function we can use closure.
+
+* Concerrency: 
+- Ability of a program to do multiple things at a same time.
+- If a program has 2 or more task it should run them individually from each other.
+- In Golang it is implementation using Go routines.
+
+* Go routines:
+- Functions which are run independent of each other.
+
+* Concerrency vs Parallesim
+
+- Concurrent 2 queue, 1 vending machine (same resource)
+                     __
+usr1 usr2 usr3 ---> |  |
+usr4 usr5 usr6 ---> |__|  
+
+- Parallel 2 queue, 2 vending machines (different resources)
+                     __
+usr1 usr2 usr3 ---> |  |
+                    |__|
+                     __
+usr4 usr5 usr6 ---> |  |
+                    |__|  
+
+Go routines are mainly focused on Concerrency and not Parallesim, but Go routines can run parallerly.
+
+* Program: Set of instructions
+* Process: When program is running
+* Thread: Multiple tasks in a program which can run concerrently or parallerly.
+* Processor: CPU, which run all the process.
+* Core: A core is a processing unit within the CPU that can execute its own set of instructions independently.
+
+                          PROGRAM
+                             | 
+ ____________________________V___________________________
+|                                                        |
+|   THREAD1       THREAD2        THREAD3       THREAD4   |
+|  _________     _________      _________     _________  |
+| |         |   |         |    |         |   |         | |
+| |  TASK1  |   |  TASK2  |    |  TASK3  |   |  TASK4  | |
+| |_________|   |_________|    |_________|   |_________| |
+|      |             |              |             |      |
+|______|_____________|______________|_____________|______|
+       |             |              |             |
+       V             V              V             V
+        ____________________CPU____________________
+       |                     |                     |  
+       |       CORE1         |       CORE2         |  <--- MULTI-TASKING
+       |_____________________|_____________________| 
+
+* How Go routines works? [REFER IMG img101.png]
+- Whenever we create go routines using go and the function call it goes to the global run queue. It is in a
+go runtime it has a queue with all the go routines.
+- Then we have a go scheduler it decides which go routines should go to which thread.
+- Go create multiple threads, than each go routines will be assigned to each thread.
+- Then which thread will run in which core, that will be decided by CPU.
